@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUpdateCompanyRequest extends FormRequest
+class StoreUpdateContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,16 @@ class StoreUpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:companies|min:1|max:100'
+                'number' => 'required|celular_com_ddd',
         ];
-    } 
+    }
 
     public function messages()
     {
-        return [
-            'name.required' => 'Insira o nome da empresa!',
-            'name.unique' => 'Essa empresa já existe!'
-        ];
+       return [
+        
+        'number.required' =>  'Insira seu numero de contato!',
+        'number.celular_com_ddd' => 'Insira o DDD de seu numero! exemplo: (55)0000-0000'
+       ];
     }
 }

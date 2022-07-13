@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUpdateCompanyRequest extends FormRequest
+class StoreUpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,16 @@ class StoreUpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:companies|min:1|max:100'
+            'name' => 'required'
         ];
-    } 
+    }
+
 
     public function messages()
     {
         return [
-            'name.required' => 'Insira o nome da empresa!',
-            'name.unique' => 'Essa empresa já existe!'
+            'name.required' => 'Insira seu  nome!'
         ];
     }
+    
 }

@@ -26,7 +26,7 @@ class StoreUpdateAddressRequest extends FormRequest
         return [
             'street' => 'required',
             'district' => 'required',
-            'zip_code' => 'required',
+            'zip_code' => 'required|formato_cep',
             'number' => 'nullable',
             'complement' => 'nullable',
             'city' => 'required',
@@ -37,11 +37,12 @@ class StoreUpdateAddressRequest extends FormRequest
     public function messages()
     {
         [
-            'street.required' => 'Nome da rua  obrigatório',
-            'district.required' => 'Nome do bairro obrigatório',
-            'zip_code.required' => 'Não possui formato de CEP válido',
-            'city.required' => 'Nome da cidade obrigatório',
-            'state.required' => 'Estado Obrigatório',
+            'street.required' => 'Insira o nome da rua',
+            'district.required' => 'Insira o nome do bairro',
+            'zip_code.required' => 'insira o CEP',
+            'zip_code.formato_cep' => 'Não possui formato de CEP válido',
+            'city.required' => 'Insira o nome da cidade',
+            'state.required' => 'Insira o nome do estado',
         ];
     }
 }
