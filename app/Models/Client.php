@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\api\Contracts\ClientModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Client extends Model
+class Client extends Model implements ClientModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
 

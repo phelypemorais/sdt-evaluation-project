@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\api\Contracts\AddressModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ Relation::enforceMorphMap([
     'company' => 'App\Models\Company',
 ]);
 
-class Address extends Model
+class Address extends Model implements AddressModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid ;
 

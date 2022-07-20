@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Contracts\ClientModelInterface as Model;
 use App\Http\Controllers\Controller;
-use App\Models\Client;
-use Illuminate\Http\Request;
 
-class ClientController extends Controller
+
+class ClientController extends Controller 
 {
     protected $client;
     
-    public function __construct(Client $client)
+    public function __construct(Model $client)
     {
         $this->client = $client;
         

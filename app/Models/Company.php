@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\api\Contracts\CompanyModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Company extends Model implements CompanyModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
 

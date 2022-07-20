@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\api\Contracts\EmployeeModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class Employee extends Model implements EmployeeModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
     
@@ -36,8 +37,9 @@ class Employee extends Model
         return $this->all();
     }
 
-    public function createEmployees(Iterable $data)
+    public function createEmployees($data)
     {
+        
         return $this->create($data);
     }
 

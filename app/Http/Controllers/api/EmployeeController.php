@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Contracts\EmployeeModelInterface as Model;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Employee;
-use iterable;
 
-class EmployeeController extends Controller
+class EmployeeController extends Controller 
 {
     protected $employee;
     
-    public function __construct(Employee $employee)
+    public function __construct(Model $employee)
     {
         $this->employee = $employee;
         
@@ -19,16 +17,18 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        
-        return response()->json($this->employee->getAllEmployees(), 200);
+     return response()->json($this->employee->getAllEmployees(), 200);
+    
     }
 
-    public function create(iterable $data)
+    public function create( $data)
     {
-        $this->employee->createEmployees($data);
+        
+         $this->employee->createEmployees($data);
+      
         return response()
-        ->json([
-            'success' => 'Funcionário criado com sucesso!'
+         ->json([
+             'success' => 'Funcionário criado com sucesso!'
         ]);
     }
 
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
 
     public function update(string $id, iterable $data)
     {
-         $this->employee->updateEmployees($id, $data);
+      $this->employee->updateEmployees($id, $data);
 
          return response()->json([
                 'success' => 'Funcionário atualizado com sucesso!'                

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +24,7 @@ class EmployeeFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'charge' => $this->faker->jobTitle(),
-          //  'company_id' => company::factory()->create(),
+           // 'company_id' => Company::factory()->create(),
           
         ];
     }

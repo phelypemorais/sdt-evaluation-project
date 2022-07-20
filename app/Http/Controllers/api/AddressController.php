@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Contracts\AddressModelInterface as Model;
 use App\Http\Controllers\Controller;
-use App\Models\Address;
-use Illuminate\Http\Request;
+
 
 class AddressController extends Controller
 {
     protected $address;
     
-    public function __construct(Address $address)
+    public function __construct(Model $address)
     {
         $this->address = $address;
         
@@ -22,36 +22,36 @@ class AddressController extends Controller
         return response()->json($this->address->getAllAddresses(), 200);
     }
 
-    public function create(Request $request)
+    public function create(iterable $data)
     {
-        $this->address->createAddresses($request->all());
+        $this->address->createAddresses($data);
         return response()
         ->json([
             'success' => 'Endereço criado com sucesso!'
         ]);
     }
 
-    public function find(Request $request)
+    public function find( string $id)
     {
          
-         return response()->json($this->address->GetByIdAddresses($request->id),200);
+         return response()->json($this->address->GetByIdAddresses($id),200);
     }
 
-    public function update( Request $request)
+    public function update( string $id, iterable $data)
     {
-         $this->address->updateAddresses($request->id, $request->all());
+         $this->address->updateAddresses($id, $data);
 
          return response()->json([
                 'success' => 'Endereço atualizado com sucesso!'                
          ]);
     }
 
-    public function destroy(Request $request)
+    public function destroy(string $id)
     {
-         $this->address->deleteAddresses($request->id);
+         $this->address->deleteAddresses($id);
          
          return response()->json([
-            'success' => 'Funcionario excluído com sucesso!'
+            'success' => 'Endereço excluído com sucesso!'
          ]);
     }
 }

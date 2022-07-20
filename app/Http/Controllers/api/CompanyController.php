@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Contracts\CompanyModelInterface as Model;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUpdateCompanyRequest;
-use App\Models\Company;
-use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+
+//use App\Http\Requests\StoreUpdateCompanyRequest;
+
+
+
+class CompanyController extends Controller 
 {
-    
-    
         protected $company;
-        
-        public function __construct(Company $company)
+    
+        public function __construct(Model $company)
         {
             $this->company = $company;
             
@@ -23,35 +24,37 @@ class CompanyController extends Controller
         {
             
             return response()->json($this->company->getAllCompanies(), 200);
+          
         }
     
-        public function create(StoreUpdateCompanyRequest $request)
+        public function create(iterable $data)
         {
-            $this->company->createCompanies($request->all());
+            
+            $this->company->createCompanies($data);
             return response()
             ->json([
                 'success' => 'Empresa criada com sucesso!'
             ]);
         }
     
-        public function find(Request $request)
+        public function find(string $id)
         {
              
-             return response()->json($this->company->GetByIdCompanies($request),200);
+             return response()->json($this->company->GetByIdCompanies($id),200);
         }
     
-        public function update(StoreUpdateCompanyRequest $request)
+        public function update(string $id , iterable $data)
         {
-             $this->company->updateCompanies($request->id,$request->all());
+             $this->company->updateCompanies($id , $data);
     
              return response()->json([
                     'success' => 'Empresa atualizada com sucesso!'                
              ]);
         }
     
-        public function destroy(Request $request)
+        public function destroy(String $id)
         {
-             $this->company->deleteCompanies($request->id);
+             $this->company->deleteCompanies($id);
              
              return response()->json([
                 'success' => 'Empresa excluída com sucesso!'
