@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\api\Contracts\EmployeeModelInterface as Model;
+use App\Http\Controllers\api\Contracts\EmployeeModelInterface ;
 use App\Http\Controllers\Controller;
 
 class EmployeeController extends Controller 
 {
     protected $employee;
     
-    public function __construct(Model $employee)
+    public function __construct(EmployeeModelInterface $employee)
     {
         $this->employee = $employee;
         

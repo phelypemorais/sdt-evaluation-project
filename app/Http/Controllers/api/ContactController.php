@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Contracts\ContactModelInterface as Model;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
-use Illuminate\Http\Request;
+
 
 class ContactController extends Controller
 {
     protected $contact;
         
-    public function __construct(Contact $contact)
+    public function __construct(Model $contact)
     {
         $this->contact = $contact;
         

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\api\Contracts;
 
-interface CompanyModelInterface{
+interface ContactModelInterface{
     
-    public function employees();
-    public function address();
-    public function contacts();
-    public function clients();
+    public function contactable();
     //CRUD
-    public function getAllCompanies();
-    public function createCompanies(Iterable $data);
-    public function GetByIdCompanies($id);
-    public function updateCompanies($id, $data);
-    public function deleteCompanies($id);
+    public function getAllContacts();
+    public function createContacts(Iterable $data);
+    public function GetByIdContacts($id);
+    public function updateContacts($id, $data);
+    public function deleteContacts($id);
   
     
     

@@ -4,6 +4,7 @@ namespace Tests\Unit\App\Http\Controllers\api;
 
 use App\Http\Controllers\api\Contracts\EmployeeModelInterface;
 use App\Http\Controllers\api\EmployeeController;
+use App\Models\Employee;
 use Mockery;
 use stdClass;
 use Tests\TestCase;
@@ -32,7 +33,7 @@ class EmployeeControllerTest extends TestCase
             ["name" => "The name field is required."],
         ), $result->getContent(), '');
     
-   
+        
 }
        
 

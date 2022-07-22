@@ -7,11 +7,17 @@ use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
+
+
 class Employee extends Model implements EmployeeModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
+
+     protected $table = 'employees';
     
-    protected $fillable = ['name', 'charge'];
+    protected $fillable = ['name', 'charge', 'company_id'];
 
     public function contacts()
     {
@@ -30,17 +36,19 @@ class Employee extends Model implements EmployeeModelInterface
 
 
 
-    //CRUD
+  
 
     public function getAllEmployees()
     {
         return $this->all();
     }
 
-    public function createEmployees($data)
+    public function createEmployees(iterable $data)
     {
-        
+       
         return $this->create($data);
+       
+        
     }
 
     public function GetByIdEmployees($id)

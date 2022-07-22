@@ -2,30 +2,30 @@
 
 namespace Tests\Unit\App\Http\Controllers\api;
 
-use App\Http\Controllers\api\AddressController;
-use App\Http\Controllers\api\Contracts\AddressModelInterface;
+use App\Http\Controllers\api\ContactController;
+use App\Http\Controllers\api\Contracts\ContactModelInterface;
 use Mockery;
 use Tests\TestCase;
 use stdClass;
 use Illuminate\Support\Str;
 
-class AddressControllerTest extends TestCase
+class ContactControllerTest extends TestCase
 {
       
 
-    public function testAddressIndex()
+    public function testContactIndex()
     {
     
-    $mock = Mockery::mock(stdClass::class, AddressModelInterface::class);
-    $mock->shouldReceive('getAllAddresses')
+    $mock = Mockery::mock(stdClass::class, ContactModelInterface::class);
+    $mock->shouldReceive('getAllContacts')
     ->once()
     ->andReturn([
         "name" => "Top Way System"
         ]);
 
-    $addressController = new AddressController($mock);
+    $contactController = new ContactController($mock);
     
-    $result = $addressController->index();
+    $result = $contactController->index();
   
     $this->assertSame(json_encode(
             ["name" => "Top Way System"],
@@ -34,92 +34,92 @@ class AddressControllerTest extends TestCase
    
 }
        
-public function testFindAddress()
+public function testFindContact()
 {
-    $mock1 = Mockery::mock(stdClass::class, AddressModelInterface::class);
+    $mock1 = Mockery::mock(stdClass::class, ContactModelInterface::class);
 
-    $mock1->shouldReceive('GetByIdAddresses')
+    $mock1->shouldReceive('GetByIdContacts')
     ->once()
     ->with("07859194-1db9-40af-880f-dd4a3c49a4e7")
     ->andReturn(["name" => "Phelype Morais"]);
 
 
-    $controllerAddress = new AddressController($mock1);
+    $controllerContact = new ContactController($mock1);
     
-    $result = $controllerAddress->find("07859194-1db9-40af-880f-dd4a3c49a4e7");
+    $result = $controllerContact->find("07859194-1db9-40af-880f-dd4a3c49a4e7");
 
     $this->assertSame(json_encode(
         ["name" => "Phelype Morais"],
         ), $result->getContent(), '');
 }
 
-public function testCreateAddress() 
+public function testCreateContact() 
 {
 
-    $address = new stdClass;
-    $address->uuid = Str::uuid();
-    $address->name = 'Rogério';
+    $contact = new stdClass;
+    $contact->uuid = Str::uuid();
+    $contact->name = 'Rogério';
     
-    $array = json_decode(json_encode($address), true);
+    $array = json_decode(json_encode($contact), true);
     
-    $mock  = Mockery::mock(stdClass::class, AddressModelInterface::class);
+    $mock  = Mockery::mock(stdClass::class, ContactModelInterface::class);
 
-    $mock->shouldReceive('createAddresses')
+    $mock->shouldReceive('createContacts')
     ->once()
     ->with($array)
     ->andReturn(stdClass::class);
    
-    $controller = new AddressController($mock);
+    $controller = new ContactController($mock);
 
     $result = $controller->create($array);
 
 
     $this->assertSame(json_encode(
-        ["success" => "Endereço criado com sucesso!"],
+        ["success" => "Contato criado com sucesso!"],
     ),$result->getContent(), '');
 
 
 }
 
-public function testUpdateAddress()
+public function testUpdateContact()
 {
 
-    $address = new stdClass;
-    $address->uuid = Str::uuid();
-    $address->name = "Rogério";
+    $contact = new stdClass;
+    $contact->uuid = Str::uuid();
+    $contact->name = "Rogério";
    
     
-    $array = json_decode(json_encode($address), true);
+    $array = json_decode(json_encode($contact), true);
 
-    $mock = Mockery::mock(stdClass::class, AddressModelInterface::class);
+    $mock = Mockery::mock(stdClass::class, ContactModelInterface::class);
     
-    $mock->shouldReceive('updateAddresses')
+    $mock->shouldReceive('updateContacts')
     ->once()
     ->with("321e5123-58bb-4fd3-a58c-91a960f3940d", $array)
     ->andReturn(true);
 
-    $controller = new AddressController($mock);
+    $controller = new ContactController($mock);
     $result = $controller->update("321e5123-58bb-4fd3-a58c-91a960f3940d", $array);
 
     $this->assertSame(json_encode(
-        ["success" => "Endereço atualizado com sucesso!"],
+        ["success" => "Contato atualizado com sucesso!"],
     ),$result->getContent(), '');
 }
 
-public function testDeleteAddress()
+public function testDeleteContact()
 {
-    $mock = Mockery::mock(stdClass::class, AddressModelInterface::class);
+    $mock = Mockery::mock(stdClass::class, ContactModelInterface::class);
     
-    $mock->shouldReceive('deleteAddresses')
+    $mock->shouldReceive('deleteContacts')
     ->once()
     ->with('321e5123-58bb-4fd3-a58c-91a960f3940d')
     ->andReturn(true);
 
-    $controller = new AddressController($mock);
+    $controller = new ContactController($mock);
     $result = $controller->destroy('321e5123-58bb-4fd3-a58c-91a960f3940d');
 
     $this->assertSame(json_encode(
-        ["success" => "Endereço excluído com sucesso!"],
+        ["success" => "Contato excluído com sucesso!"],
     ),$result->getContent(), '');
 
 }
