@@ -19,7 +19,7 @@ class ModelsEmployeeTest extends TestCase
     protected function setUp(): void
     {
         $this->model = new Employee();
-        
+
 
         parent::setUp();
     }
@@ -30,10 +30,10 @@ class ModelsEmployeeTest extends TestCase
     // }
 
     use RefreshDatabase;
-    
+
     public function test_fillable()
     {
-        
+
 
         $fillableEmployee =  $this->model->getFillable();
 
@@ -56,26 +56,26 @@ class ModelsEmployeeTest extends TestCase
         $company =  Company::factory()->create();
 
         $data = [
-           
+
             'name' => 'phelype morais',
             'charge' => 'developer',
             'company_id' => $company->id
         ];
 
         $response =  $this->model->createEmployees($data);
-          
+
         //$this->assertEquals($data,$response);
 
         $this->assertNotNull($response);
     }
 
     public function test_find_all()
-    { 
+    {
         $company =  Company::factory()->create();
-        
-        
+
+
         $data = [
-           
+
         'name' => 'phelype morais',
         'charge' => 'developer',
         'company_id' => $company->id
@@ -83,16 +83,16 @@ class ModelsEmployeeTest extends TestCase
         $this->model->create($data);
 
         $response = $this->model->getAllEmployees();
-       
+
         $this->assertCount(1,$response);
     }
 
     public function test_update()
     {
         $company =  Company::factory()->create();
-        
+
         $data = [
-           
+
             'name' => 'phelype morais',
             'charge' => 'developer',
             'company_id' => $company->id
@@ -109,6 +109,26 @@ class ModelsEmployeeTest extends TestCase
        $this->assertDatabaseHas('employees',[
         'name' => 'gustavo',
        ]);
+
     }
 
+    public function test_delete()
+    {
+        $company = company::factory()->create();
+
+        $data = [
+            'name' => 'Phelype Morais',
+            'charge' => 'Developer',
+            'company_id' => $company->id
+        ];
+
+        $employee = $this->model->create($data);
+
+     $deleted = $this->model->deleteEmployees($employee->id);
+
+     $this->assertTrue($deleted);
+     $this->assertDatabaseMissing('employees',[
+            'id' => $employee->id
+     ]);
+    }
 }

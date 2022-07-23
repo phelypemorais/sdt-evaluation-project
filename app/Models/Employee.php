@@ -16,14 +16,14 @@ class Employee extends Model implements EmployeeModelInterface
     use HasFactory, GeneratePrimaryKeyUuid;
 
      protected $table = 'employees';
-    
+
     protected $fillable = ['name', 'charge', 'company_id'];
 
     public function contacts()
     {
         return $this->morphMany(Contact::class,'contactable');
     }
-     
+
     public function address()
     {
         return $this->morphOne(Address::class,'addressable');
@@ -36,7 +36,7 @@ class Employee extends Model implements EmployeeModelInterface
 
 
 
-  
+
 
     public function getAllEmployees()
     {
@@ -45,10 +45,10 @@ class Employee extends Model implements EmployeeModelInterface
 
     public function createEmployees(iterable $data)
     {
-       
+
         return $this->create($data);
-       
-        
+
+
     }
 
     public function GetByIdEmployees($id)
@@ -61,10 +61,10 @@ class Employee extends Model implements EmployeeModelInterface
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteEmployees($id)
+    public function deleteEmployees($id):bool
     {
         return $this->where('id',$id)->delete();
     }
 
-    
+
 }
