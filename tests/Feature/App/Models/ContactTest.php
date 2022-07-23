@@ -2,16 +2,15 @@
 
 namespace Tests\Feature\App\Models;
 
-use App\Http\Controllers\api\Contracts\ClientModelInterface;
 use App\Http\Controllers\api\Contracts\CompanyModelInterface;
-use App\Models\Client;
+use App\Http\Controllers\api\Contracts\ContactModelInterface;
 use App\Models\Company;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Contact;
+use http\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ClientTest extends TestCase
+class ContactTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,7 +18,7 @@ class ClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Client();
+        $this->model = new Contact();
 
 
         parent::setUp();
@@ -30,7 +29,7 @@ class ClientTest extends TestCase
     {
         $fillable =  $this->model->getFillable();
 
-        $expected = ['name'];
+        $expected = ['number'];
 
 
         $this->assertEquals($expected, $fillable);
@@ -39,9 +38,9 @@ class ClientTest extends TestCase
     public function test_implements_interface()
     {
         $this->assertInstanceOf(
-            ClientModelInterface::class,
+            ContactModelInterface::class,
             $this->model
-            );
+        );
     }
 
 
@@ -49,55 +48,54 @@ class ClientTest extends TestCase
     {
         $data = [
 
-            'name' => 'Mariana',
+            'number' => '(254) 623-9618',
 
         ];
 
-        $response = $this->model->createClients($data);
+       $response = $this->model->createContacts($data);
 
 
         $this->assertNotNull($response);
     }
     public function test_find_all()
     {
-          Client::factory()->create();
+           Contact::factory()->create();
 
 
-        $response = $this->model->getAllClients();
+        $response = $this->model->getAllContacts();
 
         $this->assertCount(1,$response);
     }
 
     public function test_update()
     {
-        $client =  Client::factory()->create();
+          $contact = Contact::factory()->create();
 
 
 
         $att = [
-            'name' => 'Mariana',
+            'number' => '(254) 623-9618',
         ];
 
-        $response = $this->model->updateClients($client->id,$att);
+        $response = $this->model->updateContacts($contact->id,$att);
 
         $this->assertNotNull($response);
-        $this->assertDatabaseHas('clients',[
-            'name' => 'Mariana',
+        $this->assertDatabaseHas('contacts',[
+            'number' => '(254) 623-9618',
         ]);
 
     }
 
     public function test_delete()
     {
-        $client = Client::factory()->create();
+        $contact = Contact::factory()->create();
 
 
-        $deleted = $this->model->deleteClients($client->id);
+        $deleted = $this->model->deleteContacts($contact->id);
 
         $this->assertTrue($deleted);
-        $this->assertDatabaseMissing('companies',[
-            'id' => $client->id
+        $this->assertDatabaseMissing('contacts',[
+            'id' => $contact->id
         ]);
     }
-
-}
+    }

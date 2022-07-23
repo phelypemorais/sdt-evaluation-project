@@ -6,9 +6,7 @@ use App\Http\Controllers\api\Contracts\EmployeeModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-
-
+use mysql_xdevapi\Exception;
 
 
 class Employee extends Model implements EmployeeModelInterface
@@ -64,6 +62,9 @@ class Employee extends Model implements EmployeeModelInterface
     public function deleteEmployees($id):bool
     {
         return $this->where('id',$id)->delete();
+        if (!$employee){
+            throw new Exception('Employee not found');
+        }
     }
 
 

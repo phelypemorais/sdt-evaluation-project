@@ -56,7 +56,7 @@ class Company extends Model implements CompanyModelInterface
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteCompanies($id)
+    public function deleteCompanies($id):bool
     {
         return $this->where('id',$id)->delete();
     }

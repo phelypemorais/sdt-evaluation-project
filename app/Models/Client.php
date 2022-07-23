@@ -13,7 +13,7 @@ class Client extends Model implements ClientModelInterface
     use HasFactory, GeneratePrimaryKeyUuid;
 
     protected $fillable = ['name',];
-   
+
     public function addresses()
     {
         return $this->morphToMany(Address::class, 'addressable');
@@ -23,7 +23,7 @@ class Client extends Model implements ClientModelInterface
     {
         return $this->morphMany(Contact::class, 'contactable');
     }
-    
+
     public function companies()
     {
         return $this->belongsToMany(Company::class,);
@@ -52,7 +52,7 @@ class Client extends Model implements ClientModelInterface
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteClients($id)
+    public function deleteClients($id): bool
     {
         return $this->where('id',$id)->delete();
     }

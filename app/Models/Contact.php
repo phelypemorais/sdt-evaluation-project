@@ -13,13 +13,13 @@ Relation::enforceMorphMap([
     'employee' => 'App\Models\Employee',
     'company' => 'App\Models\Company',
 ]);
- 
+
 class Contact extends Model implements ContactModelInterface
 {
-    use HasFactory, GeneratePrimaryKeyUuid; 
+    use HasFactory, GeneratePrimaryKeyUuid;
 
     protected $fillable = ['number'];
-    
+
     public function contactable()
     {
         return $this->morphTo();
@@ -48,7 +48,7 @@ class Contact extends Model implements ContactModelInterface
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteContacts($id)
+    public function deleteContacts($id):bool
     {
         return $this->where('id',$id)->delete();
     }

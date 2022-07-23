@@ -131,4 +131,11 @@ class ModelsEmployeeTest extends TestCase
             'id' => $employee->id
      ]);
     }
+
+   /* public function test_delete_not_found()
+    {
+        $this->expectException(NotFoundExeption::class);
+        $this->model->deleteEmployees('fake_id');
+
+    }*/
 }
