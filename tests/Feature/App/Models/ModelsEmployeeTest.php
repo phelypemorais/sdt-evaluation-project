@@ -9,9 +9,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use function PHPUnit\Framework\assertNotNull;
+
 class ModelsEmployeeTest extends TestCase
 {
-    protected $model, $data;
+    protected $model;
+    protected $data;
 
     protected function setUp(): void
     {
@@ -26,10 +29,12 @@ class ModelsEmployeeTest extends TestCase
     //     return new Employee();
     // }
 
-   
+    use RefreshDatabase;
     
     public function test_fillable()
     {
+        
+
         $fillableEmployee =  $this->model->getFillable();
 
         $expected = ['name', 'charge', 'company_id'];
@@ -43,12 +48,12 @@ class ModelsEmployeeTest extends TestCase
         $this->assertInstanceOf(
             EmployeeModelInterface::class,
             $this->model
-            );
+        );
     }
 
     public function test_create()
     {
-       $company =  Company::factory()->create();
+        $company =  Company::factory()->create();
 
         $data = [
            
@@ -61,21 +66,49 @@ class ModelsEmployeeTest extends TestCase
           
         //$this->assertEquals($data,$response);
 
-    $this->assertNotNull($response);
+        $this->assertNotNull($response);
     }
 
-    // public function test_find_all()
-    // {
-    //  Employee::factory()->count(10)->create(); 
+    public function test_find_all()
+    { 
+        $company =  Company::factory()->create();
         
+        
+        $data = [
+           
+        'name' => 'phelype morais',
+        'charge' => 'developer',
+        'company_id' => $company->id
+    ];
+        $this->model->create($data);
+
+        $response = $this->model->getAllEmployees();
        
-    //    $model = new Employee();
-    //     $resposta = $model->all();
+        $this->assertCount(1,$response);
+    }
 
-    //     $this->assertCount(10,$resposta);
-    // }
+    public function test_update()
+    {
+        $company =  Company::factory()->create();
+        
+        $data = [
+           
+            'name' => 'phelype morais',
+            'charge' => 'developer',
+            'company_id' => $company->id
+        ];
+            $employee = $this->model->create($data);
 
+        $att = [
+            'name' => 'gustavo',
+        ];
 
+       $response = $this->model->updateEmployees($employee->id,$att);
 
- }
+       $this->assertNotNull($response);
+       $this->assertDatabaseHas('employees',[
+        'name' => 'gustavo',
+       ]);
+    }
 
+}
