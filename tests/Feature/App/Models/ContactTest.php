@@ -33,7 +33,7 @@ class ContactTest extends TestCase
     {
         
 
-        $expected = ['number'];
+        $expected = ['number', 'contactable_id', 'contactable_type'];
 
         $fillable =  $this->model->getFillable();
 
@@ -50,16 +50,21 @@ class ContactTest extends TestCase
     }
 
 
-    // public function test_create()
-    // {
+    public function test_create()
+    {
+     //$employee = Employee::factory()->create();
+     //dd($employee);   
+     $data = [
+        'number' => '99228481',
+        'contactable_type' => 'company',
+        'contactable_id' => "889988998889"
+     ];
+      
 
-    //  $data = ModelsClient::factory(Contact::factory(1))->create();
-    //    dd($data);
-    //    $response = $this->model->createContacts($data->toArray());
-    
+       $response = $this->model->createContacts($data);
 
-    //     $this->assertNotNull($response);
-    // }
+        $this->assertNotNull($response);
+    }
     // public function test_find_all()
     // {
     //        Contact::factory()->create();

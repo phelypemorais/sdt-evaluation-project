@@ -18,7 +18,7 @@ class Contact extends Model implements ContactModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
 
-    protected $fillable = ['number'];
+    protected $fillable = ['number', 'contactable_id',  'contactable_type'];
 
     public function contactable()
     {
@@ -33,7 +33,7 @@ class Contact extends Model implements ContactModelInterface
         return $this->all();
     }
 
-    public function createContacts(Iterable $data):iterable
+    public function createContacts(iterable $data)
     {
         return $this->create($data);
     }

@@ -36,7 +36,7 @@ class ContactTest extends TestCase
     {
         $fillable =  $this->model()->getFillable();
 
-        $expected = ['number'];
+        $expected = ['number', 'contactable_id',  'contactable_type'];
 
 
         $this->assertEquals($expected, $fillable);
