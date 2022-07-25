@@ -65,45 +65,66 @@ class ContactTest extends TestCase
 
         $this->assertNotNull($response);
     }
-    // public function test_find_all()
-    // {
-    //        Contact::factory()->create();
+    
+    public function test_find_all()
+    {
+        $data = [
+            'number' => '99228481',
+            'contactable_type' => 'company',
+            'contactable_id' => "889988998889"
+         ];
+        
+        $this->model->create($data);
+
+        
+        $response = $this->model->getAllContacts();
+
+        $this->assertCount(1,$response);
+    }
+
+    public function test_update()
+    {
+          
+          
+          $data = [
+            'number' => '99228481',
+            'contactable_type' => 'company',
+            'contactable_id' => "889988998889"
+         ];
+
+         $contact = $this->model->create($data);
 
 
-    //     $response = $this->model->getAllContacts();
+        $att = [
+            'number' => '(254) 623-9618',
+        ];
 
-    //     $this->assertCount(1,$response);
-    // }
+        $response = $this->model->updateContacts($contact->id,$att);
 
-    // public function test_update()
-    // {
-    //       $contact = Contact::factory()->create();
+        $this->assertNotNull($response);
+        $this->assertDatabaseHas('contacts',[
+            'number' => '(254) 623-9618',
+        ]);
+
+    }
+
+    public function test_delete()
+    {
+        $data = [
+            'number' => '99228481',
+            'contactable_type' => 'company',
+            'contactable_id' => "889988998889"
+         ];
+
+         $contact = $this->model->create($data);
+
+        $deleted = $this->model->deleteContacts($contact->id);
+
+        $this->assertTrue($deleted);
+        $this->assertDatabaseMissing('contacts',[
+            'id' => $contact->id
+        ]);
+    }
 
 
-
-    //     $att = [
-    //         'number' => '(254) 623-9618',
-    //     ];
-
-    //     $response = $this->model->updateContacts($contact->id,$att);
-
-    //     $this->assertNotNull($response);
-    //     $this->assertDatabaseHas('contacts',[
-    //         'number' => '(254) 623-9618',
-    //     ]);
-
-    // }
-
-    // public function test_delete()
-    // {
-    //     $contact = Contact::factory()->create();
-
-
-    //     $deleted = $this->model->deleteContacts($contact->id);
-
-    //     $this->assertTrue($deleted);
-    //     $this->assertDatabaseMissing('contacts',[
-    //         'id' => $contact->id
-    //     ]);
-    // }
     }
