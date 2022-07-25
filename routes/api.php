@@ -20,11 +20,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->namespace('Api')->group(function () {
-    Route::get('/Employee/index',[EmployeeController::class, 'index'])->name('api.employee.index');
-    Route::post('/Employee/create', [EmployeeController::class, 'create'])->name('api.employee.create');
-    Route::get('/Employee/find/{id}', [EmployeeController::class, 'find'])->name('api.employee.find');
-    Route::post('/Employee/update', [EmployeeController::class, 'update'])->name('api.employee.update');
-    Route::delete('/Employee/destroy/{id}', [EmployeeController::class, 'destroy'])->name('api.employee.destroy');
+    Route::get('/employee/index',[EmployeeController::class, 'index'])->name('api.employee.index');
+    Route::post('/employee/create', [EmployeeController::class, 'create'])->name('api.employee.create');
+    Route::get('/employee/find/{id}', [EmployeeController::class, 'find'])->name('api.employee.find');
+    Route::post('/employee/update', [EmployeeController::class, 'update'])->name('api.employee.update');
+    Route::delete('/employee/destroy/{id}', [EmployeeController::class, 'destroy'])->name('api.employee.destroy');
     
 });
 

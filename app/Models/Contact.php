@@ -33,7 +33,7 @@ class Contact extends Model implements ContactModelInterface
         return $this->all();
     }
 
-    public function createContacts(Iterable $data)
+    public function createContacts(Iterable $data):iterable
     {
         return $this->create($data);
     }
