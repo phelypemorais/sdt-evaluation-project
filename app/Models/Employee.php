@@ -13,18 +13,18 @@ class Employee extends Model implements EmployeeModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
 
-     protected $table = 'employees';
+    protected $table = 'employees';
 
     protected $fillable = ['name', 'charge', 'company_id'];
 
     public function contacts()
     {
-        return $this->morphMany(Contact::class,'contactable');
+        return $this->morphMany(Contact::class, 'contactable');
     }
 
     public function address()
     {
-        return $this->morphOne(Address::class,'addressable');
+        return $this->morphOne(Address::class, 'addressable');
     }
 
     public function company()
@@ -38,15 +38,12 @@ class Employee extends Model implements EmployeeModelInterface
 
     public function getAllEmployees()
     {
-        return $this->all();
+        return $this->paginate(10);
     }
 
     public function createEmployees(iterable $data)
     {
-
         return $this->create($data);
-
-
     }
 
     public function GetByIdEmployees($id)
@@ -56,16 +53,16 @@ class Employee extends Model implements EmployeeModelInterface
 
     public function updateEmployees($id, $data)
     {
-       return $this->where('id',$id)->update($data);
+        return $this->where('id', $id)->update($data);
     }
 
     public function deleteEmployees($id):bool
     {
-        return $this->where('id',$id)->delete();
-        if (!$employee){
-            throw new Exception('Employee not found');
-        }
+        return $this->where('id', $id)->delete();
+        // if (!$employee) {
+        //     throw new Exception('Employee not found');
+        // }
     }
 
-
+   
 }

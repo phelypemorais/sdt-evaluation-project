@@ -21,7 +21,7 @@ class EmployeeController extends Controller
     
     }
 
-    public function create( $data)
+    public function create($data)
     {
         
          $this->employee->createEmployees($data);
@@ -55,4 +55,6 @@ class EmployeeController extends Controller
             'success' => 'Funcionário excluído com sucesso!'
          ]);
     }
+
+    
 }

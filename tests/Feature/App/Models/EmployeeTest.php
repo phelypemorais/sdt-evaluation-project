@@ -7,11 +7,12 @@ use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Client\Response;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertNotNull;
 
-class ModelsEmployeeTest extends TestCase
+class EmployeeTest extends TestCase
 {
     protected $model;
     protected $data;
@@ -132,10 +133,18 @@ class ModelsEmployeeTest extends TestCase
      ]);
     }
 
-   /* public function test_delete_not_found()
-    {
-        $this->expectException(NotFoundExeption::class);
-        $this->model->deleteEmployees('fake_id');
+  
 
-    }*/
+
+   public function test_paginate()
+   {
+        Company::factory()->has(Employee::factory(40))->create();
+
+        $response = $this->getJson(route('api.employee.index'));
+        
+       
+        
+        
+        $response->assertJsonCount(10,'data');
+   }
 }

@@ -13,5 +13,6 @@ interface EmployeeModelInterface
     public function GetByIdEmployees($id);
     public function updateEmployees($id, $data);
     public function deleteEmployees($id);
+  
 
 }

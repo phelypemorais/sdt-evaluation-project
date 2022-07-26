@@ -22,18 +22,19 @@ class EmployeeApiTest extends TestCase
 
         $response->assertStatus(HttpResponse::HTTP_OK);
 
-        $response->assertJsonCount(0);
+        $response->assertJsonCount(0,'data');
     }
 
     public function test_get_all()
     {
-       Company::factory(1)->has(Employee::factory(10))->create();
+         Company::factory(1)->has(Employee::factory(10))->create();
 
       
 
         $response = $this->getJson($this->endpoint);
+       // dd($response['data']);
         $response->assertStatus(HttpResponse::HTTP_OK);
         
-        $response->assertJsonCount(10);
+        $response->assertJsonCount(10,'data');
     }
 }

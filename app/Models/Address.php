@@ -68,7 +68,7 @@ class Address extends Model implements AddressModelInterface
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteAddresses($id)
+    public function deleteAddresses($id):bool
     {
         return $this->where('id',$id)->delete();
     }

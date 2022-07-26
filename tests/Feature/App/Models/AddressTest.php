@@ -112,49 +112,57 @@ class AddressTest extends TestCase
         $this->assertCount(1,$response);
     }
 
-    // public function test_update()
-    // {
+    public function test_update()
+    {
           
-          
-    //       $data = [
-    //         'number' => '99228481',
-    //         'contactable_type' => 'company',
-    //         'contactable_id' => "889988998889"
-    //      ];
+        $data = [
+            'street'=> 'la',
+            'district'=> 'Rua Da Matriz n 37',
+            'zip_code'=> '29476328',
+            'number'=> '25',
+            'complement' => 'rua tal tal',
+            'city' => 'cidade',
+            'state' =>'estado',
+             ];
 
-    //      $contact = $this->model->create($data);
+         $address = $this->model->create($data);
 
 
-    //     $att = [
-    //         'number' => '(254) 623-9618',
-    //     ];
+        $att = [
+            'number' => '30',
+        ];
 
-    //     $response = $this->model->updateContacts($contact->id,$att);
+        $response = $this->model->updateAddresses($address->id,$att);
 
-    //     $this->assertNotNull($response);
-    //     $this->assertDatabaseHas('contacts',[
-    //         'number' => '(254) 623-9618',
-    //     ]);
+        $this->assertNotNull($response);
+        $this->assertDatabaseHas('addresses',[
+            'number' => '30',
+        ]);
 
-    // }
+    }
 
-    // public function test_delete()
-    // {
-    //     $data = [
-    //         'number' => '99228481',
-    //         'contactable_type' => 'company',
-    //         'contactable_id' => "889988998889"
-    //      ];
+    public function test_delete()
+    {
+        
+        $data = [
+        'street'=> 'la',
+        'district'=> 'Rua Da Matriz n 37',
+        'zip_code'=> '29476328',
+        'number'=> '25',
+        'complement' => 'rua tal tal',
+        'city' => 'cidade',
+        'state' =>'estado',
+         ];
 
-    //      $contact = $this->model->create($data);
+         $address = $this->model->create($data);
 
-    //     $deleted = $this->model->deleteContacts($contact->id);
+        $deleted = $this->model->deleteAddresses($address->id);
 
-    //     $this->assertTrue($deleted);
-    //     $this->assertDatabaseMissing('contacts',[
-    //         'id' => $contact->id
-    //     ]);
-    // }
+        $this->assertTrue($deleted);
+        $this->assertDatabaseMissing('contacts',[
+            'id' => $address->id
+        ]);
+    }
 
 
     }
