@@ -37,4 +37,19 @@ class EmployeeApiTest extends TestCase
         
         $response->assertJsonCount(10,'data');
     }
+
+   public function test_create()
+   {
+
+    $payload = [
+        'name' => 'fabio'
+    ];
+
+        $response = $this->postJson('api.employee.create',$payload);
+        
+        $response->assertJsonStructure([
+            'data' => 'name',
+        ]);
+   }
+ 
 }

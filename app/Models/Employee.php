@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\api\Contracts\EmployeeModelInterface;
+use App\Http\Controllers\api\Contracts\PaginationInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,8 @@ class Employee extends Model implements EmployeeModelInterface
     {
         return $this->paginate(10);
     }
+    
+    
 
     public function createEmployees(iterable $data)
     {
