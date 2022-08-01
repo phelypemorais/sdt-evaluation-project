@@ -38,18 +38,39 @@ class EmployeeApiTest extends TestCase
         $response->assertJsonCount(10,'data');
     }
 
-   public function test_create()
-   {
+//    public function test_create()
+//    {
 
+//     $payload = [
+//         'name' => 'fabio',
+//         'charge' => 'Líder',
+//         'company_id'=> STR::uuid(),
+//     ];
+   
+
+//         $response = $this->postJson('api.employee.create',$payload);
+        
+        
+//         $response->assertJsonStructure([
+           
+//             'id',
+//             'company_id',
+//             'name',
+//             'charge',
+            
+//         ]);
+//    }
+
+
+public function test_create_validations()
+{
     $payload = [
-        'name' => 'fabio'
+        'name' => 'phelype Morais'
     ];
 
-        $response = $this->postJson('api.employee.create',$payload);
-        
-        $response->assertJsonStructure([
-            'data' => 'name',
-        ]);
-   }
+    $response = $this->postJson('api.employee.create',$payload);
+    
+    $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+}
  
 }

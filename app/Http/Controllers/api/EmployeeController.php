@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\api\Contracts\EmployeeModelInterface ;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateEmployeeRequest;
 
 class EmployeeController extends Controller 
 {
@@ -21,7 +22,7 @@ class EmployeeController extends Controller
     
     }
 
-    public function create($data)
+    public function create(StoreUpdateEmployeeRequest $data)
     {
         
          $this->employee->createEmployees($data);
