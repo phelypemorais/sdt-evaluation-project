@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->namespace('Api')->group(function () {
+Route::prefix('v1')->namespace('api')->group(function () {
     Route::get('/employee/index',[EmployeeController::class, 'index'])->name('api.employee.index');
     Route::post('/employee/create', [EmployeeController::class, 'create'])->name('api.employee.create');
     Route::get('/employee/find/{id}', [EmployeeController::class, 'find'])->name('api.employee.find');

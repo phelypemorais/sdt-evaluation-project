@@ -24,7 +24,9 @@ class StoreUpdateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'charge' => 'required',
+            'company_id' => 'required',
         ];
     }
 
@@ -32,7 +34,10 @@ class StoreUpdateEmployeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Insira seu  nome!'
+            'name.required' => 'O campo nome é obrigatório!',
+            'charge.required' => 'O campo do cargo é obrigatório!',
+            'company_id.required' => 'O campo empresa é obrigatório!',
+            
         ];
     }
     

@@ -4,12 +4,14 @@ namespace Tests\Feature\api;
 
 use App\Models\Company;
 use App\Models\Employee;
+use GuzzleHttp\Psr7\Response as Psr7Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Response as HttpResponse;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+
 
 class EmployeeApiTest extends TestCase
 {
@@ -41,7 +43,7 @@ class EmployeeApiTest extends TestCase
     public function test_create()
     {
 
-      //  $this->withoutExceptionHandling();
+    //$this->withoutExceptionHandling();
     $company =  Company::factory()->create();
 
     $data = [
@@ -51,9 +53,8 @@ class EmployeeApiTest extends TestCase
     'company_id' => $company->id
     ];
 
-
-         $response = $this->postJson('/api/v1/employee/create',$data);
-   // dd($response['success']);
+         $response = $this->postJson(route('api.employee.create'),$data);
+         // dd($response['success']);
          $response->assertExactJson(
              [
                  'success' =>
@@ -62,18 +63,110 @@ class EmployeeApiTest extends TestCase
          );
     }
 
-/*
-public function test_create_validations()
+
+public function test_create_charge_validation_error()
 {
    // $this->withoutExceptionHandling();
     $payload = [
-        'name' => 'phelype Morais'
+        'name' => 'phelype Morais',
+        'company_id' => Str::uuid()
     ];
 
     $response = $this->postJson('/api/v1/employee/create',$payload);
-   //$response = $this->postJson(route('api.employee.create'), $payload, ['Accept' => 'application/json']);
-
+      //$response = $this->postJson(route('api.employee.create'), $payload, ['Accept' => 'application/json']);
+    //dd($response['errors']);
     $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+
+    $response->assertExactJson(
+    [
+        'errors' => [
+            "charge" => [
+                0 => "O campo do cargo é obrigatório!",
+            ]
+            ],
+        'message'=> "O campo do cargo é obrigatório!"
+    ]
+);
 }
-*/
+
+
+public function test_create_name_validation_error()
+{
+   // $this->withoutExceptionHandling();
+    $payload = [
+        'charge' => 'Developer',
+        'company_id' => Str::uuid()
+    ];
+
+    $response = $this->postJson('/api/v1/employee/create',$payload);
+      
+    //dd($response['errors']);
+    $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+
+    $response->assertExactJson(
+    [
+        'errors' => [
+            "name" => [
+                0 => "O campo nome é obrigatório!",
+            ]
+            ],
+        'message'=> "O campo nome é obrigatório!"
+    ]
+);
+}
+
+
+public function test_create_company_id_validation_error()
+{
+   // $this->withoutExceptionHandling();
+    $payload = [
+        'charge' => 'Developer',
+        'name' => 'Phelype Morais'
+    ];
+
+    $response = $this->postJson('/api/v1/employee/create',$payload);
+      
+    //dd($response['errors']);
+    $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+
+    $response->assertExactJson(
+    [
+        'errors' => [
+            "company_id" => [
+                0 => "O campo empresa é obrigatório!",
+            ]
+            ],
+        'message'=> "O campo empresa é obrigatório!"
+    ]
+);
+}
+
+public function test_find_employee()
+{
+    $company =  Company::factory()->create();
+
+    $data = [
+
+    'name' => 'phelype morais',
+    'charge' => 'developer',
+    'company_id' => $company->id];
+
+    $employee = new Employee();
+    $employee = $employee->createEmployees($data);
+       
+    
+   $response = $this->getJson("/api/v1/employee/find/{$employee->id}");
+   
+   $response->assertStatus(HttpResponse::HTTP_OK);
+   $response->assertJsonStructure([
+         
+            'id',
+            'name',
+            'charge',
+            'company_id'
+        
+    ]
+   );
+}
+
 }

@@ -31,17 +31,17 @@ class EmployeeTest extends TestCase
 
     use RefreshDatabase;
 
-    public function test_fillable()
-    {
+    // public function test_fillable()
+    // {
 
 
-        $fillableEmployee =  $this->model->getFillable();
+    //     $fillableEmployee =  $this->model->getFillable();
 
-        $expected = ['name', 'charge', 'company_id'];
+    //     $expected = ['name', 'charge', 'company_id'];
 
 
-        $this->assertEquals($expected, $fillableEmployee);
-    }
+    //     $this->assertEquals($expected, $fillableEmployee);
+    // }
 
     public function test_implements_interface()
     {

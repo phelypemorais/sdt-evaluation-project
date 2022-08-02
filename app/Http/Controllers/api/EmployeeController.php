@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\api\Contracts\EmployeeModelInterface ;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateEmployeeRequest;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -22,10 +23,10 @@ class EmployeeController extends Controller
 
     }
 
-    public function create(iterable $data)
+    public function create(StoreUpdateEmployeeRequest $request)
     {
-    dd($data);
-         $this->employee->createEmployees($data);
+     
+         $this->employee->createEmployees($request->all());
 
         return response()
          ->json([
@@ -35,8 +36,9 @@ class EmployeeController extends Controller
 
     public function find(string $id)
     {
-
-         return response()->json($this->employee->GetByIdEmployees($id),200);
+          
+          return response()->json($this->employee->GetByIdEmployees($id),200);
+         
     }
 
     public function update(string $id, iterable $data)
