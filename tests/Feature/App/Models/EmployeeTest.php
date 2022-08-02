@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\App;
+namespace tests\Feature\App;
 
 use App\Http\Controllers\api\Contracts\EmployeeModelInterface;
 use App\Models\Company;
@@ -15,7 +15,6 @@ use function PHPUnit\Framework\assertNotNull;
 class EmployeeTest extends TestCase
 {
     protected $model;
-    protected $data;
 
     protected function setUp(): void
     {
@@ -133,7 +132,7 @@ class EmployeeTest extends TestCase
      ]);
     }
 
-  
+
 
 
    public function test_paginate()
@@ -141,10 +140,10 @@ class EmployeeTest extends TestCase
         Company::factory()->has(Employee::factory(40))->create();
 
         $response = $this->getJson(route('api.employee.index'));
-        
-       
-        
-        
+
+
+
+
         $response->assertJsonCount(10,'data');
    }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\api\Contracts;
 
-interface EmployeeModelInterface 
+use App\Http\Requests\StoreUpdateEmployeeRequest;
+
+interface EmployeeModelInterface
 {
     public function contacts();
     public function address();
@@ -13,6 +15,6 @@ interface EmployeeModelInterface
     public function GetByIdEmployees($id);
     public function updateEmployees($id, $data);
     public function deleteEmployees($id);
-  
+
 
 }
