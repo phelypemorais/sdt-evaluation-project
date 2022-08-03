@@ -99,7 +99,7 @@ public function test_create_name_validation_error()
     ];
 
     $response = $this->postJson('/api/v1/employee/create',$payload);
-      
+
     //dd($response['errors']);
     $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -125,7 +125,7 @@ public function test_create_company_id_validation_error()
     ];
 
     $response = $this->postJson('/api/v1/employee/create',$payload);
-      
+
     //dd($response['errors']);
     $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -153,20 +153,57 @@ public function test_find_employee()
 
     $employee = new Employee();
     $employee = $employee->createEmployees($data);
-       
-    
+
+
    $response = $this->getJson("/api/v1/employee/find/{$employee->id}");
-   
+
    $response->assertStatus(HttpResponse::HTTP_OK);
    $response->assertJsonStructure([
-         
+
             'id',
             'name',
             'charge',
             'company_id'
-        
+
     ]
    );
 }
 
+    public function test_find_not_found()
+    {
+
+        $response = $this->getJson("/api/v1/employee/find/fake_value");
+
+        $response->assertStatus(HttpResponse::HTTP_NOT_FOUND);
+    }
+
+
+    public function test_update()
+    {
+        $company =  Company::factory()->create();
+
+        $data = [
+
+            'name' => 'phelype morais',
+            'charge' => 'developer',
+            'company_id' => $company->id];
+
+        $employee = new Employee();
+        $employee->createEmployees($data);
+
+        $payload = [
+            'name' => 'Name Update',
+            'charge' => 'Chager Update',
+            'company_id' => 'Company_id Update'
+        ];
+
+        $response = $this->putJson("/employee/update/{$employee->id}",$payload);
+
+        $response->assertStatus(HttpResponse::HTTP_OK);
+
+    }
+
+
 }
+
+

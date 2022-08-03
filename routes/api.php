@@ -23,9 +23,9 @@ Route::prefix('v1')->namespace('api')->group(function () {
     Route::get('/employee/index',[EmployeeController::class, 'index'])->name('api.employee.index');
     Route::post('/employee/create', [EmployeeController::class, 'create'])->name('api.employee.create');
     Route::get('/employee/find/{id}', [EmployeeController::class, 'find'])->name('api.employee.find');
-    Route::post('/employee/update', [EmployeeController::class, 'update'])->name('api.employee.update');
+    Route::post('/employee/update/{id}', [EmployeeController::class, 'update'])->name('api.employee.update');
     Route::delete('/employee/destroy/{id}', [EmployeeController::class, 'destroy'])->name('api.employee.destroy');
-    
+
 });
 
 Route::prefix('v1')->namespace('Api')->group(function () {
@@ -34,7 +34,7 @@ Route::prefix('v1')->namespace('Api')->group(function () {
     Route::get('/Company/find/{id}', [CompanyController::class, 'find'])->name('api.company.find');
     Route::post('/Company/update', [CompanyController::class, 'update'])->name('api.company.update');
     Route::delete('/Company/destroy/{id}', [CompanyController::class, 'destroy'])->name('api.company.destroy');
-    
+
 });
 
 Route::prefix('v1')->namespace('Api')->group(function () {
@@ -43,7 +43,7 @@ Route::prefix('v1')->namespace('Api')->group(function () {
     Route::get('/Client/find/{id}', [ClientController::class, 'find'])->name('api.client.find');
     Route::post('/Client/update', [ClientController::class, 'update'])->name('api.client.update');
     Route::delete('/Client/destroy/{id}', [ClientController::class, 'destroy'])->name('api.client.destroy');
-    
+
 });
 
 
@@ -54,7 +54,7 @@ Route::prefix('v1')->namespace('Api')->group(function () {
     Route::get('/Address/find/{id}', [AddressController::class, 'find'])->name('api.address.find');
     Route::post('/Address/update', [AddressController::class, 'update'])->name('api.address.update');
     Route::delete('/Address/destroy/{id}', [AddressController::class, 'destroy'])->name('api.address.destroy');
-    
+
 });
 
 Route::prefix('v1')->namespace('Api')->group(function () {
@@ -63,7 +63,7 @@ Route::prefix('v1')->namespace('Api')->group(function () {
     Route::get('/Contact/find/{id}', [ContactController::class, 'find'])->name('api.contact.find');
     Route::post('/Contact/update', [ContactController::class, 'update'])->name('api.contact.update');
     Route::delete('/Contact/destroy/{id}', [ContactController::class, 'destroy'])->name('api.contact.destroy');
-    
+
 });
 
 

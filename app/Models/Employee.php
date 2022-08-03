@@ -9,6 +9,8 @@ use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use mysql_xdevapi\Exception;
+use Spatie\FlareClient\Http\Exceptions\NotFound;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class Employee extends Model implements EmployeeModelInterface
@@ -53,7 +55,10 @@ class Employee extends Model implements EmployeeModelInterface
 
     public function GetByIdEmployees($id)
     {
-        return $this->find($id);
+        if (!$employee=$this->find($id)){
+            throw new NotFoundHttpException('Employee Not found');
+        }
+        return $employee;
     }
 
     public function updateEmployees($id, $data)
