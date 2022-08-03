@@ -32,7 +32,7 @@ class StoreUpdateClientRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Insira seu nome!',
+            'name.required' => 'O campo nome deve ser Obrigatório!',
         ];
     }
 }

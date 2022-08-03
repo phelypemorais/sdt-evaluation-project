@@ -12,9 +12,9 @@ interface EmployeeModelInterface
     //CRUD
     public function getAllEmployees();
     public function createEmployees(iterable $data);
-    public function GetByIdEmployees($id);
-    public function updateEmployees($id, $data);
-    public function deleteEmployees($id);
+    public function GetByIdEmployees(string $id);
+    public function updateEmployees(string $id, iterable $data);
+    public function deleteEmployees(string $id);
 
 
 }

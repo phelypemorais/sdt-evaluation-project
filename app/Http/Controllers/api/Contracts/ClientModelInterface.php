@@ -12,7 +12,7 @@ interface ClientModelInterface
     public function getAllClients();
     public function createClients(Iterable $data);
     public function GetByIdClients($id);
-    public function updateClients($id, $data);
+    public function updateClients(string $id, iterable $data);
     public function deleteClients($id);
    
 }

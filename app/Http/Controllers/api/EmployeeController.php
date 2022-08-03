@@ -41,9 +41,9 @@ class EmployeeController extends Controller
          
     }
 
-    public function update(string $id, iterable $data)
+    public function update(string $id, StoreUpdateEmployeeRequest $request)
     {
-      $this->employee->updateEmployees($id, $data);
+      $this->employee->updateEmployees($id, $request->all());
 
          return response()->json([
                 'success' => 'Funcionário atualizado com sucesso!'
@@ -52,7 +52,8 @@ class EmployeeController extends Controller
 
     public function destroy(string $id)
     {
-         $this->employee->deleteEmployees($id);
+        
+        $this->employee->deleteEmployees($id);
 
          return response()->json([
             'success' => 'Funcionário excluído com sucesso!'

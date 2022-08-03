@@ -6,11 +6,12 @@ use App\Http\Controllers\api\Contracts\ClientModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Http\Response;
 
 class Client extends Model implements ClientModelInterface
 {
     use HasFactory, GeneratePrimaryKeyUuid;
+    protected $table = 'clients';
 
     protected $fillable = ['name',];
 
@@ -34,7 +35,7 @@ class Client extends Model implements ClientModelInterface
 
     public function getAllClients()
     {
-        return $this->all();
+        return $this->paginate(10);
     }
 
     public function createClients(Iterable $data)
@@ -44,11 +45,18 @@ class Client extends Model implements ClientModelInterface
 
     public function GetByIdClients($id)
     {
-        return $this->find($id);
+        $client = $this->find($id);
+    abort_if(
+        !isset($client),
+        Response::HTTP_NOT_FOUND,
+        'Funcionário não encontrado'
+    );
+    return $client;
     }
 
-    public function updateClients($id, $data)
+    public function updateClients(string $id, iterable $data)
     {
+        
        return $this->where('id',$id)->update($data);
     }
 

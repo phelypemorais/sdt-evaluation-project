@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\api\Contracts\ClientModelInterface as Model;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\StoreUpdateClientRequest;
 
 class ClientController extends Controller 
 {
@@ -22,9 +22,10 @@ class ClientController extends Controller
         return response()->json($this->client->getAllClients(), 200);
     }
 
-    public function create(iterable $data)
+    public function create(StoreUpdateClientRequest $request)
     {
-        $this->client->createClients($data);
+        $this->client->createClients($request->all());
+        
         return response()
         ->json([
             'success' => 'Cliente criado com sucesso!'
@@ -37,9 +38,9 @@ class ClientController extends Controller
          return response()->json($this->client->GetByIdClients($id),200);
     }
 
-    public function update(string $id, iterable $data)
+    public function update(string $id, StoreUpdateClientRequest $request)
     {
-         $this->client->updateClients($id, $data);
+         $this->client->updateClients($id, $request->all());
 
          return response()->json([
                 'success' => 'Cliente atualizado com sucesso!'                

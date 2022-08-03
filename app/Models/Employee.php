@@ -8,6 +8,8 @@ use App\Http\Requests\StoreUpdateEmployeeRequest;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use mysql_xdevapi\Exception;
 use Spatie\FlareClient\Http\Exceptions\NotFound;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -53,25 +55,42 @@ class Employee extends Model implements EmployeeModelInterface
         return $this->create($data);
     }
 
-    public function GetByIdEmployees($id)
+    public function GetByIdEmployees(string $id)
     {
-        if (!$employee=$this->find($id)){
-            throw new NotFoundHttpException('Employee Not found');
-        }
-        return $employee;
-    }
+    $employee=$this->find($id);
+    abort_if(
+        !isset($employee),
+        Response::HTTP_NOT_FOUND,
+        'Funcionário não encontrado'
+    );
+    return $employee;
+}
 
-    public function updateEmployees($id, $data)
-    {
+    public function updateEmployees(string $id, iterable $data)
+    {   
+        if (Arr::exists($data, 'company_id')) {
+            $company = company::find($data['company_id']);
+        abort_if(
+            !isset($company),
+            Response::HTTP_NOT_FOUND,
+            'Empresa não existente'
+        );
+        }
+        
         return $this->where('id', $id)->update($data);
     }
 
-    public function deleteEmployees($id):bool
+    public function deleteEmployees(string $id):bool
     {
+        $employee=$this->find($id);
+        abort_if(
+            !isset($employee),
+            Response::HTTP_NOT_FOUND,
+            'Funcionário não existente'
+        );
+       
         return $this->where('id', $id)->delete();
-        // if (!$employee) {
-        //     throw new Exception('Employee not found');
-        // }
+        
     }
 
 

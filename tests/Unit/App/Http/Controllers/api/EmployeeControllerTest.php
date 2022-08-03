@@ -72,16 +72,9 @@ public function testCreateEmployee()
         'company_id' => Str::uuid(),
         
     ]);
-    // $employee = new stdClass;
-    // $employee->uuid = Str::uuid();
-    // $employee->name = "Phelype";
-    // $employee->charge = "Developer";
-    // $employee->company_id = Str::uuid();
+    
     $requestEmployee = new StoreUpdateEmployeeRequest([],$request->all());
-    
-    // $array = json_decode(json_encode($employee), true);
    
-    
      $mock  = Mockery::mock(stdClass::class, EmployeeModelInterface::class);
 
     $mock->shouldReceive('createEmployees')
@@ -126,23 +119,23 @@ public function testCreateEmployee()
 //     ),$result->getContent(), '');
 // }
 
-// public function testDeleteEmployees()
-// {
-//     $mock = Mockery::mock(stdClass::class, EmployeeModelInterface::class);
+public function testDeleteEmployees()
+{
+    $mock = Mockery::mock(stdClass::class, EmployeeModelInterface::class);
     
-//     $mock->shouldReceive('deleteEmployees')
-//     ->once()
-//     ->with('321e5123-58bb-4fd3-a58c-91a960f3940d')
-//     ->andReturn(true);
+    $mock->shouldReceive('deleteEmployees')
+    ->once()
+    ->with('321e5123-58bb-4fd3-a58c-91a960f3940d')
+    ->andReturn(true);
 
-//     $controller = new EmployeeController($mock);
-//     $result = $controller->destroy('321e5123-58bb-4fd3-a58c-91a960f3940d');
+    $controller = new EmployeeController($mock);
+    $result = $controller->destroy('321e5123-58bb-4fd3-a58c-91a960f3940d');
 
-//     $this->assertSame(json_encode(
-//         ["success" => "Funcionário excluído com sucesso!"],
-//     ),$result->getContent(), '');
+    $this->assertSame(json_encode(
+        ["success" => "Funcionário excluído com sucesso!"],
+    ),$result->getContent(), '');
 
-// }
+}
 
 
 

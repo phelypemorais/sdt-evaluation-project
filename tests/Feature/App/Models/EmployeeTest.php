@@ -101,6 +101,7 @@ class EmployeeTest extends TestCase
 
         $att = [
             'name' => 'gustavo',
+            
         ];
 
        $response = $this->model->updateEmployees($employee->id,$att);
@@ -108,6 +109,7 @@ class EmployeeTest extends TestCase
        $this->assertNotNull($response);
        $this->assertDatabaseHas('employees',[
         'name' => 'gustavo',
+        
        ]);
 
     }

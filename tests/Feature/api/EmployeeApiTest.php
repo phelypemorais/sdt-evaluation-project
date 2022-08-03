@@ -173,37 +173,101 @@ public function test_find_employee()
     {
 
         $response = $this->getJson("/api/v1/employee/find/fake_value");
-
+       //dd($response['message']);
         $response->assertStatus(HttpResponse::HTTP_NOT_FOUND);
+        
     }
 
 
     public function test_update()
     {
-        $company =  Company::factory()->create();
+       // $this->withoutExceptionHandling();
 
+        $company =  Company::factory()->create();
         $data = [
 
             'name' => 'phelype morais',
             'charge' => 'developer',
-            'company_id' => $company->id];
-
+            'company_id' => $company->id
+        ];
+       
         $employee = new Employee();
-        $employee->createEmployees($data);
+        $employee = $employee->createEmployees($data);
+        
+        //dd($employee->id);
 
         $payload = [
             'name' => 'Name Update',
-            'charge' => 'Chager Update',
-            'company_id' => 'Company_id Update'
+            'charge' => 'Charge Update',
+            'company_id' => $company->id,
         ];
 
-        $response = $this->putJson("/employee/update/{$employee->id}",$payload);
+        $response = $this->putJson("/api/v1/employee/update/{$employee->id}",$payload);
 
         $response->assertStatus(HttpResponse::HTTP_OK);
 
     }
 
+    public function test_update_not_found_company()
+    {
+       // $this->withoutExceptionHandling();
+
+        $company =  Company::factory()->create();
+        $data = [
+
+            'name' => 'phelype morais',
+            'charge' => 'developer',
+            'company_id' => $company->id
+        ];
+       
+        $employee = new Employee();
+        $employee = $employee->createEmployees($data);
+        
+        //dd($employee->id);
+
+        $payload = [
+            'name' => 'Name Update',
+            'charge' => 'Charge Update',
+            'company_id' => "company",
+        ];
+
+        $response = $this->putJson("/api/v1/employee/update/{$employee->id}",$payload);
+
+        $response->assertStatus(HttpResponse::HTTP_NOT_FOUND);
+
+    }
+
+    public function test_delete()
+    {
+
+        $company =  Company::factory()->create();
+        $data = [
+
+            'name' => 'phelype morais',
+            'charge' => 'developer',
+            'company_id' => $company->id
+        ];
+       
+        $employee = new Employee();
+        $employee = $employee->createEmployees($data);
+
+        $response = $this->deleteJson("/api/v1/employee/destroy/{$employee->id}");
+        
+        $response->assertExactJson(
+            [
+                'success' => 'Funcionário excluído com sucesso!',
+            ]
+        );
+
+        
+        
+    }
+
+    public function test_delete_not_found()
+    {
+
+        $response = $this->deleteJson("/api/v1/employee/destroy/fake_value");
+        $response->assertStatus(HttpResponse::HTTP_NOT_FOUND);
+    }
 
 }
-
-

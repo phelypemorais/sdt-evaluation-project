@@ -10,7 +10,7 @@ trait GeneratePrimaryKeyUuid
     {
         static::creating(function ($model) {
             if (!$model->getKey()) {
-                $model->setAttribute($model->getKeyName(), Str::uuid());
+                $model->setAttribute($model->getKeyName(), (string) Str::uuid());
             }
         });
     }
