@@ -24,16 +24,16 @@ class StoreUpdateContactRequest extends FormRequest
     public function rules()
     {
         return [
-                'number' => 'required|celular_com_ddd',
+                'number' => 'required',
         ];
     }
 
     public function messages()
     {
        return [
-        
-        'number.required' =>  'Insira seu numero de contato!',
-        'number.celular_com_ddd' => 'Insira o DDD de seu numero! exemplo: (55)0000-0000'
+
+        'number.required' =>  'O campo contato deve ser obrigatório!',
+
        ];
     }
 }

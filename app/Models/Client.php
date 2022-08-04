@@ -49,14 +49,14 @@ class Client extends Model implements ClientModelInterface
     abort_if(
         !isset($client),
         Response::HTTP_NOT_FOUND,
-        'Funcionário não encontrado'
+        'Cliente não encontrado'
     );
     return $client;
     }
 
     public function updateClients(string $id, iterable $data)
     {
-        
+
        return $this->where('id',$id)->update($data);
     }
 

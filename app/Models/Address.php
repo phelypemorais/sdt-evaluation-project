@@ -7,6 +7,7 @@ use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Response;
 
 Relation::enforceMorphMap([
     'client' => 'App\Models\Client',
@@ -28,6 +29,8 @@ class Address extends Model implements AddressModelInterface
         'complement',
         'city',
         'state',
+        'address_id',
+        'address_type'
     ];
 
     public function addressable()
@@ -50,7 +53,7 @@ class Address extends Model implements AddressModelInterface
 
     public function getAllAddresses()
     {
-        return $this->all();
+        return $this->paginate(10);
     }
 
     public function createAddresses(Iterable $data)
@@ -58,20 +61,33 @@ class Address extends Model implements AddressModelInterface
         return $this->create($data);
     }
 
-    public function GetByIdAddresses($id)
+    public function GetByIdAddresses(string $id)
     {
-        return $this->find($id);
+        $address=$this->find($id);
+        abort_if(
+            !isset($address),
+            Response::HTTP_NOT_FOUND,
+            'Endereço não encontrado'
+        );
+        return $address;
     }
 
-    public function updateAddresses($id, $data)
+    public function updateAddresses(string $id, iterable $data)
     {
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteAddresses($id):bool
+    public function deleteAddresses(string $id):bool
     {
-        return $this->where('id',$id)->delete();
-    }
+        $address=$this->find($id);
+        abort_if(
+            !isset($address),
+            Response::HTTP_NOT_FOUND,
+            'Endereço não existente'
+        );
 
+        return $this->where('id', $id)->delete();
+
+    }
 
 }

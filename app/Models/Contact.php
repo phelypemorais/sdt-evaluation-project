@@ -7,6 +7,7 @@ use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Response;
 
 Relation::enforceMorphMap([
     'client' => 'App\Models\Client',
@@ -30,7 +31,7 @@ class Contact extends Model implements ContactModelInterface
 
     public function getAllContacts()
     {
-        return $this->all();
+        return $this->paginate(10);
     }
 
     public function createContacts(iterable $data)
@@ -38,9 +39,15 @@ class Contact extends Model implements ContactModelInterface
         return $this->create($data);
     }
 
-    public function GetByIdContacts($id)
+    public function GetByIdContacts(string $id)
     {
-        return $this->find($id);
+        $contact = $this->find($id);
+        abort_if(
+            !isset($contact),
+            Response::HTTP_NOT_FOUND,
+            'Contato não encontrado'
+        );
+        return $contact;
     }
 
     public function updateContacts($id, $data)

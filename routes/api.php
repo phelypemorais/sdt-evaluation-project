@@ -49,20 +49,20 @@ Route::prefix('v1')->namespace('Api')->group(function () {
 
 
 Route::prefix('v1')->namespace('Api')->group(function () {
-    Route::get('/Address/index',[AddressController::class, 'index'])->name('api.address.index');
-    Route::post('/Address/create', [AddressController::class, 'create'])->name('api.address.create');
-    Route::get('/Address/find/{id}', [AddressController::class, 'find'])->name('api.address.find');
-    Route::put('/Address/update/{id}', [AddressController::class, 'update'])->name('api.address.update');
-    Route::delete('/Address/destroy/{id}', [AddressController::class, 'destroy'])->name('api.address.destroy');
+    Route::get('/address/index',[AddressController::class, 'index'])->name('api.address.index');
+    Route::post('/address/create', [AddressController::class, 'create'])->name('api.address.create');
+    Route::get('/address/find/{id}', [AddressController::class, 'find'])->name('api.address.find');
+    Route::put('/address/update/{id}', [AddressController::class, 'update'])->name('api.address.update');
+    Route::delete('/address/destroy/{id}', [AddressController::class, 'destroy'])->name('api.address.destroy');
 
 });
 
 Route::prefix('v1')->namespace('Api')->group(function () {
-    Route::get('/Contact/index',[ContactController::class, 'index'])->name('api.contact.index');
-    Route::post('/Contact/create', [ContactController::class, 'create'])->name('api.contact.create');
-    Route::get('/Contact/find/{id}', [ContactController::class, 'find'])->name('api.contact.find');
-    Route::put('/Contact/update/{id}', [ContactController::class, 'update'])->name('api.contact.update');
-    Route::delete('/Contact/destroy/{id}', [ContactController::class, 'destroy'])->name('api.contact.destroy');
+    Route::get('/contact/index',[ContactController::class, 'index'])->name('api.contact.index');
+    Route::post('/contact/create', [ContactController::class, 'create'])->name('api.contact.create');
+    Route::get('/contact/find/{id}', [ContactController::class, 'find'])->name('api.contact.find');
+    Route::put('/contact/update/{id}', [ContactController::class, 'update'])->name('api.contact.update');
+    Route::delete('/contact/destroy/{id}', [ContactController::class, 'destroy'])->name('api.contact.destroy');
 
 });
 

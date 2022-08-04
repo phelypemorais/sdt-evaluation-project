@@ -26,12 +26,12 @@ class StoreUpdateCompanyRequest extends FormRequest
         return [
             'name' => 'required|unique:companies|min:1|max:100'
         ];
-    } 
+    }
 
     public function messages()
     {
         return [
-            'name.required' => 'Insira o nome da empresa!',
+            'name.required' => 'O campo nome deve ser obrigatório!',
             'name.unique' => 'Essa empresa já existe!'
         ];
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\api\Contracts\CompanyModelInterface;
 use App\Traits\GeneratePrimaryKeyUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class Company extends Model implements CompanyModelInterface
 {
@@ -38,7 +39,7 @@ class Company extends Model implements CompanyModelInterface
 
     public function getAllCompanies()
     {
-        return $this->all();
+        return $this->paginate(10);
     }
 
     public function createCompanies(Iterable $data)
@@ -46,17 +47,24 @@ class Company extends Model implements CompanyModelInterface
         return $this->create($data);
     }
 
-    public function GetByIdCompanies($id)
+    public function GetByIdCompanies(string $id)
     {
-        return $this->find($id);
+        $company = $this->find($id);
+        abort_if(
+            !isset($company),
+            Response::HTTP_NOT_FOUND,
+            'Cliente não encontrado'
+        );
+        return $company;
     }
 
-    public function updateCompanies($id, $data)
+
+    public function updateCompanies(string $id, iterable $data)
     {
        return $this->where('id',$id)->update($data);
     }
 
-    public function deleteCompanies($id):bool
+    public function deleteCompanies(string $id):bool
     {
         return $this->where('id',$id)->delete();
     }

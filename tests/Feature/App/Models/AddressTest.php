@@ -28,7 +28,7 @@ class AddressTest extends TestCase
 
     public function test_fillable()
     {
-        
+
 
         $expected = ['street',
         'district',
@@ -36,7 +36,10 @@ class AddressTest extends TestCase
         'number',
         'complement',
         'city',
-        'state',];
+        'state',
+        'address_id',
+            'address_type'
+            ];
 
         $fillable =  $this->model->getFillable();
 
@@ -56,7 +59,7 @@ class AddressTest extends TestCase
     public function test_create()
     {
      //$employee = Employee::factory()->create();
-     //dd($employee);   
+     //dd($employee);
      $data = [
         'street'=> 'la',
         'district'=> 'lala',
@@ -66,13 +69,13 @@ class AddressTest extends TestCase
         'city' => 'cidade',
         'state' =>'estado',
      ];
-      
+
 
        $response = $this->model->createAddresses($data);
 
         $this->assertNotNull($response);
     }
-    
+
     public function test_find_all()
     {
         $data = [
@@ -84,10 +87,10 @@ class AddressTest extends TestCase
         'city' => 'cidade',
         'state' =>'estado',
          ];
-        
+
         $this->model->create($data);
 
-        
+
         $response = $this->model->getAllAddresses();
 
         $this->assertCount(1,$response);
@@ -104,7 +107,7 @@ class AddressTest extends TestCase
         'city' => 'cidade',
         'state' =>'estado',
          ];
-        
+
         $this->model->create($data);
 
         $response = $this->model->getAllAddresses();
@@ -114,7 +117,7 @@ class AddressTest extends TestCase
 
     public function test_update()
     {
-          
+
         $data = [
             'street'=> 'la',
             'district'=> 'Rua Da Matriz n 37',
@@ -143,7 +146,7 @@ class AddressTest extends TestCase
 
     public function test_delete()
     {
-        
+
         $data = [
         'street'=> 'la',
         'district'=> 'Rua Da Matriz n 37',

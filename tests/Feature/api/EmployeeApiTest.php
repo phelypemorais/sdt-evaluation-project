@@ -149,7 +149,8 @@ public function test_find_employee()
 
     'name' => 'phelype morais',
     'charge' => 'developer',
-    'company_id' => $company->id];
+    'company_id' => $company->id
+    ];
 
     $employee = new Employee();
     $employee = $employee->createEmployees($data);
@@ -175,7 +176,7 @@ public function test_find_employee()
         $response = $this->getJson("/api/v1/employee/find/fake_value");
        //dd($response['message']);
         $response->assertStatus(HttpResponse::HTTP_NOT_FOUND);
-        
+
     }
 
 
@@ -190,10 +191,10 @@ public function test_find_employee()
             'charge' => 'developer',
             'company_id' => $company->id
         ];
-       
+
         $employee = new Employee();
         $employee = $employee->createEmployees($data);
-        
+
         //dd($employee->id);
 
         $payload = [
@@ -219,10 +220,10 @@ public function test_find_employee()
             'charge' => 'developer',
             'company_id' => $company->id
         ];
-       
+
         $employee = new Employee();
         $employee = $employee->createEmployees($data);
-        
+
         //dd($employee->id);
 
         $payload = [
@@ -247,20 +248,20 @@ public function test_find_employee()
             'charge' => 'developer',
             'company_id' => $company->id
         ];
-       
+
         $employee = new Employee();
         $employee = $employee->createEmployees($data);
 
         $response = $this->deleteJson("/api/v1/employee/destroy/{$employee->id}");
-        
+
         $response->assertExactJson(
             [
                 'success' => 'Funcionário excluído com sucesso!',
             ]
         );
 
-        
-        
+
+
     }
 
     public function test_delete_not_found()

@@ -17,17 +17,17 @@ class AddressTest extends TestCase
         return new Address();
     }
 
-   
-    
+
+
     public function test_fillable()
     {
         $fillable =  $this->model()->getFillable();
 
-        $expected = ['street','district','zip_code','number','complement','city','state'];
+        $expected = ['street','district','zip_code','number','complement','city','state','address_id','address_type'];
 
 
         $this->assertEquals($expected, $fillable);
-        
+
     }
 
     public function test_implements_interface()

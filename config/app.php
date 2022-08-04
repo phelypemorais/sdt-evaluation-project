@@ -176,7 +176,9 @@ return [
         App\Providers\CompanyServiceProvider::class,
         App\Providers\ContactServiceProvider::class,
         App\Providers\ClientServiceProvider::class,
-        
+        App\Providers\AddressServiceProvider::class,
+
+
 
 
         App\Providers\AuthServiceProvider::class,
