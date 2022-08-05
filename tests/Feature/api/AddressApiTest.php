@@ -19,10 +19,20 @@ class AddressApiTest extends TestCase
     use RefreshDatabase;
 
     protected string $endpoint = '/api/v1/address/index';
+    
+    protected function setUp(): void
+    {     
+        parent::setUp();
+        $client = Client::factory()->create();
+        
+        $address = Address::factory()->make();
 
+    $this->data = array_merge($address->toArray(),['addressable_id' => $client->id,'addressable_type' => 'client']);
+          
+    }
 
     public function test_get_all_empty()
-    {
+    {   
         $response = $this->getJson($this->endpoint);
 
         $response->assertStatus(HttpResponse::HTTP_OK);
@@ -45,25 +55,8 @@ class AddressApiTest extends TestCase
     public function test_create()
     {
 
-        //$this->withoutExceptionHandling();
-       $client =  Client::factory()->create();
 
-        $data = [
-            'street' => '1-463-905-6168',
-            'district' => 'client',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'ali',
-            'city' => 'cariacica',
-            'state' => 'ES',
-            'addressable_id' => '889988998889',
-            'addressable_type' => 'client'
-        ];
-
-
-
-        $response = $this->postJson(route('api.address.create'), $data);
-        //   dd($response['success']);
+        $response = $this->postJson(route('api.address.create'), $this->data);
         $response->assertExactJson(
             [
                 'success' => 'Endereço criado com sucesso!'
@@ -75,18 +68,8 @@ class AddressApiTest extends TestCase
     public function test_create_street_validation_error()
     {
 
-        $payload = [
-            'street' => '',
-            'district' => 'client',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'ali',
-            'city' => 'cariacica',
-            'state' => 'ES',
-            'addressable_id' => Str::uuid(),
-            'addressable_type' => 'clients'
 
-        ];
+    $payload = array_merge($this->data,["street"=>null]);
 
         $response = $this->postJson('/api/v1/address/create', $payload);
         //dd($response['errors']);
@@ -107,21 +90,10 @@ class AddressApiTest extends TestCase
     public function test_create_district_validation_error()
     {
 
-        $payload = [
-            'street' => 'ala',
-            'district' => '',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'ali',
-            'city' => 'cariacica',
-            'state' => 'ES',
-            'addressable_id' => Str::uuid(),
-            'addressable_type' => 'clients'
-
-        ];
+        $payload = array_merge($this->data,["district"=>null]);
 
         $response = $this->postJson('/api/v1/address/create', $payload);
-        //dd($response['errors']);
+       
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
         $response->assertExactJson(
@@ -139,18 +111,9 @@ class AddressApiTest extends TestCase
     public function test_create_zip_code_validation_error()
     {
 
-        $payload = [
-            'street' => 'ala',
-            'district' => 'thenagatius',
-            'zip_code' => "",
-            'number' => '10',
-            'complement' => 'ali',
-            'city' => 'cariacica',
-            'state' => 'ES',
-            'addressable_id' => Str::uuid(),
-            'addressable_type' => 'clients'
 
-        ];
+        $payload = array_merge($this->data,["zip_code"=>null]);
+        
 
         $response = $this->postJson('/api/v1/address/create', $payload);
         //dd($response['errors']);
@@ -170,21 +133,10 @@ class AddressApiTest extends TestCase
     public function test_create_city_validation_error()
     {
 
-        $payload = [
-            'street' => 'ala',
-            'district' => 'thenagatius',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'porai',
-            'city' => '',
-            'state' => 'ES',
-            'addressable_id' => Str::uuid(),
-            'addressable_type' => 'clients'
-
-        ];
+        $payload = array_merge($this->data,["city"=>null]);
 
         $response = $this->postJson('/api/v1/address/create', $payload);
-        //dd($response['errors']);
+      
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
         $response->assertExactJson(
@@ -202,18 +154,7 @@ class AddressApiTest extends TestCase
     public function test_create_state_validation_error()
     {
 
-        $payload = [
-            'street' => 'ala',
-            'district' => 'thenagatius',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'porai',
-            'city' => 'cariacica',
-            'state' => '',
-            'addressable_id' => Str::uuid(),
-            'addressable_type' => 'clients'
-
-        ];
+        $payload = array_merge($this->data,["state"=>null]);
 
         $response = $this->postJson('/api/v1/address/create', $payload);
         //dd($response['errors']);
@@ -232,27 +173,16 @@ class AddressApiTest extends TestCase
     }
 
 
+/**
+ * @depends test_create
+ */
 
-
-    public function test_find_Address()
+    public function test_find_address_by_id()
     {
 
-        $client =  Client::factory()->create();
-
-        $data = [
-            'street' => '1-463-905-6168',
-            'district' => 'client',
-            'zip_code' => "889988998889",
-            'number' => '10',
-            'complement' => 'ali',
-            'city' => 'cariacica',
-            'state' => 'ES',
-            'addressable_id' => $client->id,
-            'addressable_type' => 'clients'
-        ];
-
-        $address = new Address();
-        $address = $address->createAddresses($data);
+       $address = new Address();
+     $address= $address->createAddresses($this->data);
+       
 
         $response = $this->getJson("/api/v1/address/find/{$address->id}");
 

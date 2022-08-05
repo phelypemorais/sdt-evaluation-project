@@ -16,13 +16,25 @@ class AddressTest extends TestCase
     use RefreshDatabase;
 
     protected $model;
-
+    protected $data;
     protected function setUp(): void
-    {
+    {   
         $this->model = new Address();
 
+        $this->data = [
+            'street'=> 'la',
+            'district'=> 'lala',
+            'zip_code'=> '29476328',
+            'number'=> '25',
+            'complement' => 'rua tal tal',
+            'city' => 'cidade',
+            'state' =>'estado',
+         ]; 
+
+        
 
         parent::setUp();
+        
     }
 
 
@@ -60,35 +72,18 @@ class AddressTest extends TestCase
     {
      //$employee = Employee::factory()->create();
      //dd($employee);
-     $data = [
-        'street'=> 'la',
-        'district'=> 'lala',
-        'zip_code'=> '29476328',
-        'number'=> '25',
-        'complement' => 'rua tal tal',
-        'city' => 'cidade',
-        'state' =>'estado',
-     ];
+     
+        
 
-
-       $response = $this->model->createAddresses($data);
+       $response = $this->model->createAddresses($this->data);
 
         $this->assertNotNull($response);
     }
 
     public function test_find_all()
     {
-        $data = [
-            'street'=> 'la',
-        'district'=> 'liaaa',
-        'zip_code'=> '29476328',
-        'number'=> '25',
-        'complement' => 'rua tal tal',
-        'city' => 'cidade',
-        'state' =>'estado',
-         ];
 
-        $this->model->create($data);
+        $this->model->create($this->data);
 
 
         $response = $this->model->getAllAddresses();
@@ -98,17 +93,9 @@ class AddressTest extends TestCase
 
     public function test_fin_all()
     {
-        $data = [
-        'street'=> 'la',
-        'district'=> 'Rua Da Matriz n 37',
-        'zip_code'=> '29476328',
-        'number'=> '25',
-        'complement' => 'rua tal tal',
-        'city' => 'cidade',
-        'state' =>'estado',
-         ];
+        
 
-        $this->model->create($data);
+        $this->model->create($this->data);
 
         $response = $this->model->getAllAddresses();
 
@@ -118,17 +105,9 @@ class AddressTest extends TestCase
     public function test_update()
     {
 
-        $data = [
-            'street'=> 'la',
-            'district'=> 'Rua Da Matriz n 37',
-            'zip_code'=> '29476328',
-            'number'=> '25',
-            'complement' => 'rua tal tal',
-            'city' => 'cidade',
-            'state' =>'estado',
-             ];
+        
 
-         $address = $this->model->create($data);
+        $address = $this->model->create($this->data);
 
 
         $att = [
@@ -147,17 +126,7 @@ class AddressTest extends TestCase
     public function test_delete()
     {
 
-        $data = [
-        'street'=> 'la',
-        'district'=> 'Rua Da Matriz n 37',
-        'zip_code'=> '29476328',
-        'number'=> '25',
-        'complement' => 'rua tal tal',
-        'city' => 'cidade',
-        'state' =>'estado',
-         ];
-
-         $address = $this->model->create($data);
+         $address = $this->model->create($this->data);
 
         $deleted = $this->model->deleteAddresses($address->id);
 

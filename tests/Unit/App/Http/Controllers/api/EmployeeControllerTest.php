@@ -44,16 +44,16 @@ class EmployeeControllerTest extends TestCase
  public function test_find_employees()
  {
      $mock = Mockery::mock(stdClass::class, EmployeeModelInterface::class);
-
+    $id = (string) Str::uuid();
      $mock->shouldReceive('GetByIdEmployees')
      ->once()
-     ->with("321e5123-58bb-4fd3-a58c-91a960f3940d")
+     ->with($id)
      ->andReturn(["name" => "Phelype Morais",'Charge'=>'Developer']);
 
 
     $controllerEmployee = new EmployeeController($mock);
 
-     $result = $controllerEmployee->find("321e5123-58bb-4fd3-a58c-91a960f3940d");
+     $result = $controllerEmployee->find($id);
 
      $this->assertSame(json_encode(
          ["name" => "Phelype Morais",'Charge'=>'Developer'],
